@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styles.css" />
+    <title>Vini's Job Application Tracker</title>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Job Application Tracker</h1>
+      <form action="" id="application-form">
+        <div class="form-field">
+          <label for="company-field">Company Name</label>
+          <input
+            type="text"
+            id="company-field"
+            name="company"
+            required
+            placeholder="e.g. Google, Nubank"
+            autocomplete="organization"
+          />
+        </div>
+        <div class="form-field">
+          <label for="position-field">Position / Job Title</label>
+          <input
+            type="text"
+            id="position-field"
+            name="position"
+            required
+            placeholder="e.g. Frontend Developer, Product Designer"
+            autocomplete="organization-title"
+          />
+        </div>
+        <div class="form-field">
+          <label for="date-applied-field">Date Applied</label>
+          <input
+            type="date"
+            id="date-applied-field"
+            name="dateApplied"
+            required
+          />
+        </div>
+        <div class="form-field">
+          <label for="status-field">Status</label>
+          <select name="status" id="status-field">
+            <option value="Applied" selected>Applied</option>
+            <option value="Rejected">Rejected</option>
+            <option value="`Interview">Interview</option>
+          </select>
+        </div>
+        <div class="form-actions">
+          <button id="submit-btn" type="submit">Add Application</button>
+        </div>
+      </form>
+      <table>
+        <thead>
+          <tr>
+            <th>Company</th>
+            <th>Position</th>
+            <th>Data Applied</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="applications-body">
+          <!-- rows will be rendered here -->
+        </tbody>
+      </table>
+      <p id="empty-state">No applications added yet.</p>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
+</html>

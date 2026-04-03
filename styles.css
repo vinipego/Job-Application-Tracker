@@ -1,0 +1,97 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  /* border: dotted 1px greenyellow; */
+}
+
+body {
+  font-family:
+    system-ui,
+    -apple-system,
+    sans-serif;
+  margin: 0;
+  padding: 24px;
+  background-color: #121212;
+  color: #e0e0e0;
+  line-height: 1.5;
+  min-height: 100vh;
+  border: none;
+}
+
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+h1 {
+  margin-top: 0;
+  color: #fff;
+  font-size: 2rem;
+}
+
+form {
+  max-width: 500px;
+  margin: 0 auto 40px;
+
+  display: grid;
+  gap: 16px;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  color: #bbbbbb;
+}
+
+input {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #444444;
+  border-radius: 6px;
+  background-color: #1e1e1e;
+  color: #ffffff;
+  font-size: 1rem;
+}
+
+input:focus {
+  outline: none;
+  border-color: #6c9eff;
+  box-shadow: 0 0 0 3px rgba(108, 158, 255, 0.2);
+}
+
+.form-actions {
+  text-align: right;
+}
+
+button {
+  padding: 10px 20px;
+  background-color: #6c9eff;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #5a8aff;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th,
+td {
+    padding: 12px;
+    border-bottom: 1px solid #333;
+    text-align: left;
+}
