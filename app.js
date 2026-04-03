@@ -19,6 +19,7 @@ document.addEventListener("DOMContentLoaded", function () {
       company,
       position,
       dateApplied,
+      status,
     };
 
     if (editingId !== null) {
@@ -29,6 +30,7 @@ document.addEventListener("DOMContentLoaded", function () {
             company,
             position,
             dateApplied,
+            status,
           };
         }
         return app;
@@ -36,7 +38,7 @@ document.addEventListener("DOMContentLoaded", function () {
       stopEditing();
     } else {
       apps.push(newApp);
-      form.reset();
+      resetFormToDefaults();
     }
     render();
   });
@@ -59,20 +61,18 @@ document.addEventListener("DOMContentLoaded", function () {
         return app.id !== id;
       });
       render();
-      console.log("Delete ID: ", id);
     }
 
     if (action === "edit") {
       const row = e.target.closest("tr");
       const id = row.dataset.id;
 
-
       const appToEdit = apps.find(function (app) {
         return app.id === id;
       });
 
       if (!appToEdit) return;
-      
+
       editingId = id;
       startEditing(appToEdit);
     }
@@ -84,8 +84,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function render() {
     tbody.innerHTML = "";
-
-    console.log("Rendering apps:", apps);
+    
     if (apps.length === 0) {
       emptyState.style.display = "block";
       return;
@@ -101,6 +100,7 @@ document.addEventListener("DOMContentLoaded", function () {
             <td>${app.company}</td>
             <td>${app.position}</td>
             <td>${app.dateApplied}</td>
+            <td>${app.status}</td>
             <td>
                 <button data-action="edit">Edit</button>
                 <button data-action="delete">Delete</button>
@@ -110,17 +110,33 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-  function startEditing(app){
+  function startEditing(app) {
     form.company.value = app.company;
     form.position.value = app.position;
     form.dateApplied.value = app.dateApplied;
+    form.status.value = app.status;
     submitBtn.textContent = "Edit";
   }
 
-  function stopEditing(){
+  function stopEditing() {
     editingId = null;
-    submitBtn.textContent = "Add Application"
-    form.reset();
+    resetFormToDefaults();
   }
+
+  function setTodayDate() {
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = String(today.getMonth() + 1).padStart(2, "0");
+    const day = String(today.getDate()).padStart(2, "0");
+    form.dateApplied.value = `${year}-${month}-${day}`;
+  }
+
+  function resetFormToDefaults() {
+    form.reset();
+    setTodayDate();
+    form.status.value = "Applied";
+    submitBtn.textContent = "Add Application";
+  }
+  setTodayDate();
   render();
 });
