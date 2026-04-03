@@ -5,7 +5,8 @@ document.addEventListener("DOMContentLoaded", function () {
   const tbody = document.getElementById("applications-body");
   const emptyState = document.getElementById("empty-state");
   const submitBtn = document.getElementById("submit-btn");
-  let apps = [];
+  const cancelBtn = document.getElementById("cancel-btn");
+  let apps = loadApps();
   let editingId = null;
 
   form.addEventListener("submit", (e) => {
@@ -40,17 +41,21 @@ document.addEventListener("DOMContentLoaded", function () {
       apps.push(newApp);
       resetFormToDefaults();
     }
+    saveApps();
     render();
+  });
+
+  cancelBtn.addEventListener("click", (e) => {
+    stopEditing();
   });
 
   tbody.addEventListener("click", function (e) {
     const action = e.target.dataset.action;
-
     if (!action) return;
+    const row = e.target.closest("tr");
 
     if (action === "delete") {
-      const row = e.target.closest("tr");
-      const id = row.dataset.id;
+      const rowId = row.dataset.id;
 
       // make pop up confirmation better in the future. For now, it works.
       const confirmed = confirm(
@@ -58,22 +63,22 @@ document.addEventListener("DOMContentLoaded", function () {
       );
       if (!confirmed) return;
       apps = apps.filter(function (app) {
-        return app.id !== id;
+        return app.id !== rowId;
       });
+      saveApps();
       render();
     }
 
     if (action === "edit") {
-      const row = e.target.closest("tr");
-      const id = row.dataset.id;
+      const rowId = row.dataset.id;
 
       const appToEdit = apps.find(function (app) {
-        return app.id === id;
+        return app.id === rowId;
       });
 
       if (!appToEdit) return;
 
-      editingId = id;
+      editingId = rowId;
       startEditing(appToEdit);
     }
   });
@@ -84,7 +89,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function render() {
     tbody.innerHTML = "";
-    
+
     if (apps.length === 0) {
       emptyState.style.display = "block";
       return;
@@ -111,11 +116,12 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function startEditing(app) {
+    cancelBtn.hidden = false;
     form.company.value = app.company;
     form.position.value = app.position;
     form.dateApplied.value = app.dateApplied;
     form.status.value = app.status;
-    submitBtn.textContent = "Edit";
+    submitBtn.textContent = "Save Changes";
   }
 
   function stopEditing() {
@@ -132,11 +138,23 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function resetFormToDefaults() {
+    cancelBtn.hidden = true;
     form.reset();
     setTodayDate();
     form.status.value = "Applied";
     submitBtn.textContent = "Add Application";
   }
+
+  function saveApps() {
+    localStorage.setItem("apps", JSON.stringify(apps));
+  }
+
+  function loadApps(){
+    const stored = localStorage.getItem("apps");
+    if (!stored) return [];
+    return JSON.parse(stored);
+  }
+
   setTodayDate();
   render();
 });

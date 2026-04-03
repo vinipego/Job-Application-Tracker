@@ -50,7 +50,8 @@ label {
   color: #bbbbbb;
 }
 
-input {
+input,
+select {
   width: 100%;
   padding: 10px 12px;
   border: 1px solid #444444;
@@ -60,10 +61,15 @@ input {
   font-size: 1rem;
 }
 
-input:focus {
+input:focus,
+select:focus {
   outline: none;
   border-color: #6c9eff;
   box-shadow: 0 0 0 3px rgba(108, 158, 255, 0.2);
+}
+
+select{
+  cursor: pointer;;
 }
 
 .form-actions {
