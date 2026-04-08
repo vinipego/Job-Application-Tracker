@@ -6,8 +6,11 @@ document.addEventListener("DOMContentLoaded", function () {
   const emptyState = document.getElementById("empty-state");
   const submitBtn = document.getElementById("submit-btn");
   const cancelBtn = document.getElementById("cancel-btn");
+  const statusFilter = document.getElementById("status-filter");
+
   let apps = loadApps();
   let editingId = null;
+  let currentFilter = "All";
 
   form.addEventListener("submit", (e) => {
     e.preventDefault();
@@ -83,21 +86,39 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 
+  statusFilter.addEventListener("change", function () {
+    currentFilter = statusFilter;
+    render();
+  });
+
   function makeId() {
     return Date.now().toString();
   }
 
   function render() {
     tbody.innerHTML = "";
+    let filteredApps = apps;
 
-    if (apps.length === 0) {
+    if (currentFilter !== "All") {
+      filteredApps = apps.filter(function (app) {
+        return app.status === currentFilter;
+      });
+    }
+
+    if (filteredApps.length === 0) {
       emptyState.style.display = "block";
+
+      if (apps.length === 0 || currentFilter === "All") {
+        emptyState.textContent = "No applications added yet.";
+      } else {
+        emptyState.textContent = `No applications match the filter "${currentFilter}".`;
+      }
       return;
     }
 
     emptyState.style.display = "none";
 
-    apps.forEach(function (app) {
+    filteredApps.forEach(function (app) {
       const row = document.createElement("tr");
       row.dataset.id = app.id;
 
@@ -105,10 +126,10 @@ document.addEventListener("DOMContentLoaded", function () {
             <td>${app.company}</td>
             <td>${app.position}</td>
             <td>${app.dateApplied}</td>
-            <td>${app.status}</td>
+            <td><span class="status-badge status-${app.status.toLowerCase()}">${app.status}</span></td>
             <td>
-                <button data-action="edit">Edit</button>
-                <button data-action="delete">Delete</button>
+                <button class="table-btn edit-btn" data-action="edit">Edit</button>
+                <button class="table-btn delete-btn" data-action="delete">Delete</button>
             </td>
         `;
       tbody.appendChild(row);
@@ -149,7 +170,7 @@ document.addEventListener("DOMContentLoaded", function () {
     localStorage.setItem("apps", JSON.stringify(apps));
   }
 
-  function loadApps(){
+  function loadApps() {
     const stored = localStorage.getItem("apps");
     if (!stored) return [];
     return JSON.parse(stored);

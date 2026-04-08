@@ -68,8 +68,64 @@ select:focus {
   box-shadow: 0 0 0 3px rgba(108, 158, 255, 0.2);
 }
 
-select{
-  cursor: pointer;;
+select {
+  cursor: pointer;
+}
+
+.filter-bar {
+  max-width: 500px;
+  margin: 0 auto 20px;
+}
+
+.status-badge {
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  display: inline-block;
+}
+
+.status-applied {
+  background-color: rgba(108, 158, 255, 0.2);
+  color: #6c9eff;
+}
+
+.status-rejected {
+  background-color: rgba(255, 99, 99, 0.2);
+  color: #ff6363;
+}
+
+.status-interview {
+  background-color: rgba(100, 255, 150, 0.2);
+  color: #64ff96;
+}
+
+.table-btn {
+  padding: 4px 10px;
+  font-size: 0.85rem;
+  border-radius: 10px;
+  background-color: transparent;
+  border: 1px solid #444;
+  color: #ccc;
+  cursor: pointer;
+}
+
+.table-btn + .table-btn {
+  margin-left: 6px;
+}
+
+.table-btn:hover {
+  background-color: #2a2a2a;
+}
+
+.edit-btn:hover {
+  border-color: #6c9eff;
+  color: #6c9eff;
+}
+
+.delete-btn:hover {
+  border-color: #ff6363;
+  color: #ff6363;
 }
 
 .form-actions {
@@ -95,9 +151,22 @@ table {
   border-collapse: collapse;
 }
 
+tbody tr:hover {
+  background-color: #1a1a1a;
+}
+
 th,
 td {
-    padding: 12px;
-    border-bottom: 1px solid #333;
-    text-align: left;
+  padding: 12px;
+  border-bottom: 1px solid #333;
+  text-align: left;
+}
+
+td {
+  vertical-align: middle;
+}
+
+td:last-child {
+  text-align: right;
+  white-space: nowrap;
 }
